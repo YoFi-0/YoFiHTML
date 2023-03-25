@@ -1,0 +1,18 @@
+*{
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    font-family: Sans-serif;
+    list-style: none;
+}
+
+body{
+    height: 100vh;
+    .box{
+        width: 100px;
+        height: 100px;
+        background-color: #F00;
+    }
+
+    justify-self: unset;
+}
