@@ -1,4 +1,37 @@
 "use strict";
+class Yprops {
+    h1 = "h1";
+    h2 = "h2";
+    h3 = "h3";
+    h4 = "h4";
+    h5 = "h5";
+    h6 = "h6";
+    div = "div";
+    span = "span";
+    p = "p";
+    header = "header";
+    li = "li";
+    ul = "ul";
+    main = "main";
+    section = "section";
+    script = "script";
+    img = "img";
+    br = "br";
+    a = "a";
+    button = "button";
+    i = "i";
+    iframe = "iframe";
+    td = "td";
+    tr = "tr";
+    tbody = "tbody";
+    table = "table";
+    input = "input";
+    source = "source";
+    video = "video";
+    audio = "audio";
+    noscript = "noscript";
+    label = "label";
+}
 class Y {
     static h1 = "h1";
     static h2 = "h2";
@@ -302,22 +335,22 @@ const $script = (textContent, cheldren, attrs, init) => {
         textContent: textContent
     });
 };
-const _img = (cheldren, attrs, init) => {
+const _img = (value, attrs, init) => {
     return new YoFiElement({
         tag: Y.img,
         attrs: attrs,
-        cheldren: cheldren ? cheldren.filter((value) => typeof value != "string") : undefined,
+        cheldren: undefined,
         init: init,
-        textContent: cheldren && typeof cheldren[0] == "string" ? cheldren[0] : ""
+        textContent: value
     });
 };
-const $img = (textContent, cheldren, attrs, init) => {
+const $img = (value, attrs, init) => {
     return new YoFiElement({
-        tag: Y.img,
+        tag: Y.input,
         attrs: attrs,
-        cheldren: cheldren,
+        cheldren: undefined,
         init: init,
-        textContent: textContent
+        textContent: value
     });
 };
 const _br = (cheldren, attrs, init) => {
@@ -482,22 +515,22 @@ const $table = (textContent, cheldren, attrs, init) => {
         textContent: textContent
     });
 };
-const _input = (cheldren, attrs, init) => {
+const _input = (value, attrs, init) => {
     return new YoFiElement({
         tag: Y.input,
         attrs: attrs,
-        cheldren: cheldren ? cheldren.filter((value) => typeof value != "string") : undefined,
+        cheldren: undefined,
         init: init,
-        textContent: cheldren && typeof cheldren[0] == "string" ? cheldren[0] : ""
+        textContent: value
     });
 };
-const $input = (textContent, cheldren, attrs, init) => {
+const $input = (value, attrs, init) => {
     return new YoFiElement({
         tag: Y.input,
         attrs: attrs,
-        cheldren: cheldren,
+        cheldren: undefined,
         init: init,
-        textContent: textContent
+        textContent: value
     });
 };
 const _source = (cheldren, attrs, init) => {

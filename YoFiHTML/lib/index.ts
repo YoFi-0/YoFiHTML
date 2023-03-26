@@ -1,12 +1,14 @@
 interface attrTtype {
-    classes?:string,
-    dataset?:any
-    id?:string
-    style?:YoFiStyles,
-    href?:string,
-    src?:string
-    type?:string
-    baseSelector?:string
+    readonly classes?:string,
+    readonly dataset?:any
+    readonly id?:string
+    readonly style?:YoFiStyles,
+    readonly href?:string,
+    readonly src?:string
+    readonly type?:string
+    readonly baseSelector?:string
+    readonly placeHolder?:string
+    readonly value?:string
 }
 
 class Sleep {
@@ -28,7 +30,7 @@ class Sleep {
 
 interface YoFiElementContructer {
     attrs?:attrTtype,
-    tag:string,
+    tag:keyof Yprops,
     cheldren?:YoFiElement[],
     textContent?:string
     init?:(elem:YoFiElement) => void | Promise<void>
@@ -76,20 +78,24 @@ interface YoFiEvnts {
 
 interface YoFiFunctions {
     setStyles:(styles:YoFiStyles) => YoFiElement
-    addStyles:(styles:YoFiStyles) => YoFiElement
+    changeStyles:(styles:YoFiStyles) => YoFiElement
     removeStyles:(styles:Array<keyof YoFiStyles>) => YoFiElement
     removeAllStyles:() => YoFiElement
     addClasses:(classes:string) => YoFiElement;
     removeClasses:(classes:string) => YoFiElement;
+    setText:(text:string) => YoFiElement;
 }
 
 class YoFiElement implements YoFiEvnts, YoFiFunctions{
-    attrs:attrTtype | undefined
-    cheldren:YoFiElement[] | undefined
-    element:HTMLElement
-    jQElement:JQuery<HTMLElement>
+    public readonly attrs:attrTtype | undefined
+    public readonly cheldren:YoFiElement[] | undefined
+    public readonly element:HTMLElement
+    public readonly jQElement:JQuery<HTMLElement>
+    public readonly text:string = ""
+    public readonly tag:keyof Yprops
     constructor({attrs, tag, cheldren, init, textContent}:YoFiElementContructer) {
         const element = document.createElement(tag)!
+        this.tag = tag
         this.element = element
         if(attrs){
             this.attrs = attrs
@@ -125,12 +131,16 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
                     father.appendChild(this.element)
                 }
             }
+            if(attrs.value){
+                this.setText(attrs.value)
+            }
+            if(attrs.placeHolder){
+                this.changeAttr("placeHolder" ,attrs.placeHolder)
+            }
         }
 
-
-
         if(textContent){
-            this.element.textContent = textContent
+            this.setText(textContent)
         }
         if(cheldren){
             this.cheldren = cheldren
@@ -145,37 +155,58 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         return
     }
 
-    setStyles(styles:YoFiStyles):YoFiElement{
+    public setStyles(styles:YoFiStyles):YoFiElement{
         (this.element as any).style = ""
         for(let style of Object.keys(styles)){
             (this.element as any).style[style] = (styles as any)[style]
         }
         if(this.attrs){
-            this.attrs.style = styles
+            this.Re_Attr({
+                style:styles
+            })
         }
         return this
     }
-    removeClasses(classes: string) {
+    public removeClasses(classes: string) {
         for(let className of classes.trim().split(" ")){
             className ? this.element.classList.remove(className) : null
             if(this.attrs?.classes){
-                this.attrs.classes = this.attrs.classes.trim().split(" ").filter(value => value != className).join(" ")
+                (this.attrs.classes as any) = this.attrs.classes.trim().split(" ").filter(value => value != className).join(" ")
             }
         }
         return this
     }
-    addClasses(classes: string) {
+    public setText(text: string)  {
+        if(this.tag == "input"){
+            (this.element as HTMLInputElement).value = text
+            this.Re_Attr({
+                value:text
+            })
+        } else if(this.tag == "img") {
+            (this.element as HTMLImageElement).src = text
+            this.Re_Attr({
+                src:text
+            })
+        } else {
+            this.element.textContent = text
+        };
+        (this.text as any) = text
+        return this
+    }
+    public addClasses(classes: string) {
         for(let className of classes.trim().split(" ")){
             className ? this.element.classList.add(className) : null
             if(this.attrs){
                 var tembClasses =  this.attrs.classes?.trim().split(" ")
                 tembClasses?.push(className)
-                this.attrs.classes = tembClasses?.join(" ")
+                this.Re_Attr({
+                    classes:tembClasses?.join(" ")
+                })
             }
         }
         return this
     }
-    addStyles(styles:YoFiStyles):YoFiElement{
+    public changeStyles(styles:YoFiStyles):YoFiElement{
         for(let style of Object.keys(styles)){
             (this.element as any).style[style] = (styles as any)[style]
         }
@@ -184,7 +215,7 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         }
         return this
     }
-    removeStyles(styles: Array<keyof YoFiStyles>):YoFiElement{
+    public removeStyles(styles: Array<keyof YoFiStyles>):YoFiElement{
         for(let style of styles){
             this.element.style.removeProperty(`${style.toString()}`)
             if(this.attrs && this.attrs.style){
@@ -193,56 +224,73 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         }
         return this
     }
-    removeAllStyles():YoFiElement{
+    public removeAllStyles():YoFiElement{
         this.element.attributes.removeNamedItem("style")
         if(this.attrs && this.attrs.style){
-            this.attrs.style = undefined
+            this.Re_Attr({
+                style:undefined
+            })
         }
         return this
     }
 
     // events
-    onClick(func:(e:MouseEvent) => void){
+    public onClick(func:(e:MouseEvent) => void){
         this.element.onclick = (e) => {
             func(e)
         }
         return this
     }
-    onMouseDown(func:(e:MouseEvent) => void){
+    public onMouseDown(func:(e:MouseEvent) => void){
         this.element.onmousedown = (e) => {
             func(e)
         }
         return this
     }
-    onMouseUp(func:(e:MouseEvent) => void){
+    public onMouseUp(func:(e:MouseEvent) => void){
         this.element.onmouseup = (e) => {
             func(e)
         }
         return this
     }
-    onMouseMove(func:(e:MouseEvent) => void){
+    public onMouseMove(func:(e:MouseEvent) => void){
         this.element.onmousemove = (e) => {
             func(e)
         }
         return this
     }
-    onTouchStart(func:(e:TouchEvent) => void){
+    public onTouchStart(func:(e:TouchEvent) => void){
         this.element.ontouchstart = (e) => {
             func(e)
         }
         return this
     }
-    onTouchEnd(func:(e:TouchEvent) => void){
+    public onTouchEnd(func:(e:TouchEvent) => void){
         this.element.ontouchend = (e) => {
             func(e)
         }
         return this
     }
-    onTouchMove(func:(e:TouchEvent) => void){
+    public onTouchMove(func:(e:TouchEvent) => void){
         this.element.ontouchmove = (e) => {
             func(e)
         }
         return this
+    }
+
+    public changeAttr(attr:keyof attrTtype, value:string){
+        this.element.setAttribute(attr.toLowerCase(), value)
+        if(this.attrs){
+            (this.attrs as any)[attr] = value
+        }
+        return this
+    }
+    private Re_Attr(options:attrTtype){
+        if(this.attrs){
+            for(let key of Object.keys(options)){
+                (this.attrs as any)[key] = (options as any)[key]
+            }
+        }
     }
 }
 
@@ -265,7 +313,7 @@ const c = ({tag, attrs, cheldren, init, textContent}:YoFiElementContructer) => {
         textContent:textContent
     })
 }
-const cc = (tag:string, textContent?:string , attrs?:attrTtype, baseSelector?:string, cheldren?:YoFiElement[], init?:(elem:YoFiElement) => void) => {
+const cc = (tag:keyof Y, textContent?:string , attrs?:attrTtype, baseSelector?:string, cheldren?:YoFiElement[], init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:tag,
         attrs:attrs,

@@ -1,3 +1,38 @@
+class Yprops {
+    	public  readonly h1 = "h1"
+	public  readonly h2 = "h2"
+	public  readonly h3 = "h3"
+	public  readonly h4 = "h4"
+	public  readonly h5 = "h5"
+	public  readonly h6 = "h6"
+	public  readonly div = "div"
+	public  readonly span = "span"
+	public  readonly p = "p"
+	public  readonly header = "header"
+	public  readonly li = "li"
+	public  readonly ul = "ul"
+	public  readonly main = "main"
+	public  readonly section = "section"
+	public  readonly script = "script"
+	public  readonly img = "img"
+	public  readonly br = "br"
+	public  readonly a = "a"
+	public  readonly button = "button"
+	public  readonly i = "i"
+	public  readonly iframe = "iframe"
+	public  readonly td = "td"
+	public  readonly tr = "tr"
+	public  readonly tbody = "tbody"
+	public  readonly table = "table"
+	public  readonly input = "input"
+	public  readonly source = "source"
+	public  readonly video = "video"
+	public  readonly audio = "audio"
+	public  readonly noscript = "noscript"
+	public  readonly label = "label"
+
+}
+
 class Y {
 
 	public static readonly h1 = "h1"
@@ -33,7 +68,6 @@ class Y {
 	public static readonly label = "label"
 
 }
-
 const _h1 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h1,
@@ -52,7 +86,6 @@ const $h1 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _h2 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h2,
@@ -71,7 +104,6 @@ const $h2 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _h3 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h3,
@@ -90,7 +122,6 @@ const $h3 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _h4 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h4,
@@ -109,7 +140,6 @@ const $h4 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _h5 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h5,
@@ -128,7 +158,6 @@ const $h5 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _h6 = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.h6,
@@ -147,7 +176,6 @@ const $h6 = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _div = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.div,
@@ -166,7 +194,6 @@ const $div = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  i
         textContent:textContent
     })
 };
-
 const _span = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.span,
@@ -185,7 +212,6 @@ const $span = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  
         textContent:textContent
     })
 };
-
 const _p = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.p,
@@ -204,7 +230,6 @@ const $p = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  ini
         textContent:textContent
     })
 };
-
 const _header = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.header,
@@ -223,7 +248,6 @@ const $header = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
         textContent:textContent
     })
 };
-
 const _li = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.li,
@@ -242,7 +266,6 @@ const $li = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _ul = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.ul,
@@ -261,7 +284,6 @@ const $ul = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _main = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.main,
@@ -280,7 +302,6 @@ const $main = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  
         textContent:textContent
     })
 };
-
 const _section = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.section,
@@ -299,7 +320,6 @@ const $section = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype
         textContent:textContent
     })
 };
-
 const _script = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.script,
@@ -318,27 +338,24 @@ const $script = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
         textContent:textContent
     })
 };
-
-const _img = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+const _img = (value:string, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.img,
         attrs:attrs,
-        cheldren:cheldren ? (cheldren as any).filter((value:any) => typeof value != "string") : undefined,
+        cheldren:undefined,
         init:init,
-        textContent: cheldren && typeof cheldren[0] == "string" ? cheldren[0] : ""
+        textContent:value
     })
 };
-const $img = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  init?:(elem:YoFiElement) => void) => {
+const $img = (value?:string, attrs?:attrTtype,  init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
-        tag:Y.img,
+        tag:Y.input,
         attrs:attrs,
-        cheldren:cheldren,
+        cheldren:undefined,
         init:init,
-        textContent:textContent
+        textContent:value
     })
-};
-
-const _br = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+};const _br = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.br,
         attrs:attrs,
@@ -356,7 +373,6 @@ const $br = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _a = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.a,
@@ -375,7 +391,6 @@ const $a = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  ini
         textContent:textContent
     })
 };
-
 const _button = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.button,
@@ -394,7 +409,6 @@ const $button = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
         textContent:textContent
     })
 };
-
 const _i = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.i,
@@ -413,7 +427,6 @@ const $i = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  ini
         textContent:textContent
     })
 };
-
 const _iframe = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.iframe,
@@ -432,7 +445,6 @@ const $iframe = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
         textContent:textContent
     })
 };
-
 const _td = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.td,
@@ -451,7 +463,6 @@ const $td = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _tr = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.tr,
@@ -470,7 +481,6 @@ const $tr = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  in
         textContent:textContent
     })
 };
-
 const _tbody = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.tbody,
@@ -489,7 +499,6 @@ const $tbody = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype, 
         textContent:textContent
     })
 };
-
 const _table = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.table,
@@ -508,27 +517,24 @@ const $table = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype, 
         textContent:textContent
     })
 };
-
-const _input = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+const _input = (value:string, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.input,
         attrs:attrs,
-        cheldren:cheldren ? (cheldren as any).filter((value:any) => typeof value != "string") : undefined,
+        cheldren:undefined,
         init:init,
-        textContent: cheldren && typeof cheldren[0] == "string" ? cheldren[0] : ""
+        textContent:value
     })
 };
-const $input = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,  init?:(elem:YoFiElement) => void) => {
+const $input = (value?:string, attrs?:attrTtype,  init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.input,
         attrs:attrs,
-        cheldren:cheldren,
+        cheldren:undefined,
         init:init,
-        textContent:textContent
+        textContent:value
     })
-};
-
-const _source = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+};const _source = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.source,
         attrs:attrs,
@@ -546,7 +552,6 @@ const $source = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
         textContent:textContent
     })
 };
-
 const _video = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.video,
@@ -565,7 +570,6 @@ const $video = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype, 
         textContent:textContent
     })
 };
-
 const _audio = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.audio,
@@ -584,7 +588,6 @@ const $audio = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype, 
         textContent:textContent
     })
 };
-
 const _noscript = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.noscript,
@@ -603,7 +606,6 @@ const $noscript = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtyp
         textContent:textContent
     })
 };
-
 const _label = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.label,

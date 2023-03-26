@@ -32,13 +32,35 @@ class Y  {
     noscript = "noscript"
     label = "label"
 }
+
+const noCloseTageElms = ["img", "input"]
+
 const fs = require("fs")
 var final = ""
 var classProp = ""
 Object.keys(new Y()).forEach(elm => {
     classProp += `\tpublic static readonly ${elm} = "${elm}"\n`
-    final += `
-const _${elm} = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+    final +=
+noCloseTageElms.includes(elm) ?
+`const _${elm} = (value:string, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
+    return new YoFiElement({
+        tag:Y.${elm},
+        attrs:attrs,
+        cheldren:undefined,
+        init:init,
+        textContent:value
+    })
+};
+const $${elm} = (value?:string, attrs?:attrTtype,  init?:(elem:YoFiElement) => void) => {
+    return new YoFiElement({
+        tag:Y.input,
+        attrs:attrs,
+        cheldren:undefined,
+        init:init,
+        textContent:value
+    })
+};` :
+`const _${elm} = (cheldren?:Array<string | YoFiElement>, attrs?:attrTtype, init?:(elem:YoFiElement) => void) => {
     return new YoFiElement({
         tag:Y.${elm},
         attrs:attrs,
@@ -59,7 +81,11 @@ const $${elm} = (textContent?:string, cheldren?:YoFiElement[], attrs?:attrTtype,
 `
 
 })
-fs.writeFile(path.join(__dirname, "../lib/YoFi_Elms.ts"), `class Y {
+fs.writeFile(path.join(__dirname, "../lib/YoFi_Elms.ts"), `class Yprops {
+    ${classProp.replace(/static/g, "")}
+}
+
+class Y {
 
 ${classProp}
 }

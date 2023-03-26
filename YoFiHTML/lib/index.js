@@ -18,8 +18,11 @@ class YoFiElement {
     cheldren;
     element;
     jQElement;
+    text = "";
+    tag;
     constructor({ attrs, tag, cheldren, init, textContent }) {
         const element = document.createElement(tag);
+        this.tag = tag;
         this.element = element;
         if (attrs) {
             this.attrs = attrs;
@@ -54,9 +57,15 @@ class YoFiElement {
                     father.appendChild(this.element);
                 }
             }
+            if (attrs.value) {
+                this.setText(attrs.value);
+            }
+            if (attrs.placeHolder) {
+                this.changeAttr("placeHolder", attrs.placeHolder);
+            }
         }
         if (textContent) {
-            this.element.textContent = textContent;
+            this.setText(textContent);
         }
         if (cheldren) {
             this.cheldren = cheldren;
@@ -76,7 +85,9 @@ class YoFiElement {
             this.element.style[style] = styles[style];
         }
         if (this.attrs) {
-            this.attrs.style = styles;
+            this.Re_Attr({
+                style: styles
+            });
         }
         return this;
     }
@@ -89,18 +100,40 @@ class YoFiElement {
         }
         return this;
     }
+    setText(text) {
+        if (this.tag == "input") {
+            this.element.value = text;
+            this.Re_Attr({
+                value: text
+            });
+        }
+        else if (this.tag == "img") {
+            this.element.src = text;
+            this.Re_Attr({
+                src: text
+            });
+        }
+        else {
+            this.element.textContent = text;
+        }
+        ;
+        this.text = text;
+        return this;
+    }
     addClasses(classes) {
         for (let className of classes.trim().split(" ")) {
             className ? this.element.classList.add(className) : null;
             if (this.attrs) {
                 var tembClasses = this.attrs.classes?.trim().split(" ");
                 tembClasses?.push(className);
-                this.attrs.classes = tembClasses?.join(" ");
+                this.Re_Attr({
+                    classes: tembClasses?.join(" ")
+                });
             }
         }
         return this;
     }
-    addStyles(styles) {
+    changeStyles(styles) {
         for (let style of Object.keys(styles)) {
             this.element.style[style] = styles[style];
         }
@@ -121,7 +154,9 @@ class YoFiElement {
     removeAllStyles() {
         this.element.attributes.removeNamedItem("style");
         if (this.attrs && this.attrs.style) {
-            this.attrs.style = undefined;
+            this.Re_Attr({
+                style: undefined
+            });
         }
         return this;
     }
@@ -167,6 +202,20 @@ class YoFiElement {
             func(e);
         };
         return this;
+    }
+    changeAttr(attr, value) {
+        this.element.setAttribute(attr.toLowerCase(), value);
+        if (this.attrs) {
+            this.attrs[attr] = value;
+        }
+        return this;
+    }
+    Re_Attr(options) {
+        if (this.attrs) {
+            for (let key of Object.keys(options)) {
+                this.attrs[key] = options[key];
+            }
+        }
     }
 }
 const baseId = (id) => {
