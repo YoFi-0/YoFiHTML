@@ -7,7 +7,7 @@
 //     ], {}, (elm) => {
 //         pre = elm
 //     })
-// ], {classes:["box"], baseSelector:"body"}).onClick(() => {
+// ], {classes:"box", baseSelector:"body"}).onClick(() => {
 //     console.log(pre.element.textContent)
 // })
 
