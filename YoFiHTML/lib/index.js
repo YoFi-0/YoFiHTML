@@ -62,7 +62,9 @@ class YoFiElement {
                 this.setText(attrs.value);
             }
             if (attrs.placeHolder) {
-                this.changeAttr("placeHolder", attrs.placeHolder);
+                this.changeAttr({
+                    placeHolder: attrs.placeHolder
+                });
             }
         }
         if (textContent) {
@@ -205,9 +207,22 @@ class YoFiElement {
         return this;
     }
     changeAttr(attr, value) {
-        this.element.setAttribute(attr.toLowerCase(), value);
-        if (this.attrs) {
-            this.attrs[attr] = value;
+        if (typeof attr == "string" && value) {
+            this.element.setAttribute(attr, value);
+            if (this.attrs) {
+                this.attrs[attr] = value;
+            }
+            return this;
+        }
+        if (value || typeof attr == "string") {
+            throw Error("string must have a value");
+            return this;
+        }
+        for (let key of Object.keys(attr)) {
+            this.element.setAttribute(key, attr[key]);
+            if (this.attrs) {
+                this.attrs[key] = attr[key];
+            }
         }
         return this;
     }
@@ -248,7 +263,6 @@ class YoFiSelectorElement extends YoFiElement {
                 style: {},
                 dataset: {}
             },
-            init: init,
             textContent: "",
         });
         this.element.remove();
@@ -288,6 +302,9 @@ class YoFiSelectorElement extends YoFiElement {
             for (let child of cheldren) {
                 this.element.appendChild(child.element);
             }
+        }
+        if (init) {
+            init(this);
         }
     }
 }

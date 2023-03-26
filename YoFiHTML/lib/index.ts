@@ -85,7 +85,7 @@ interface YoFiFunctions {
     addClasses:(classes:string) => YoFiElement;
     removeClasses:(classes:string) => YoFiElement;
     setText:(text:string) => YoFiElement;
-    changeAttr: (attr:keyof attrTtype, value:string) => YoFiElement
+    changeAttr: (attr:attrTtype | keyof attrTtype, value?:string) => YoFiElement
 }
 
 class YoFiElement implements YoFiEvnts, YoFiFunctions{
@@ -138,7 +138,9 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
                 this.setText(attrs.value)
             }
             if(attrs.placeHolder){
-                this.changeAttr("placeHolder" ,attrs.placeHolder)
+                this.changeAttr({
+                    placeHolder: attrs.placeHolder
+                })
             }
         }
 
@@ -281,10 +283,23 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         return this
     }
 
-    public changeAttr(attr:keyof attrTtype, value:string){
-        this.element.setAttribute(attr.toLowerCase(), value)
-        if(this.attrs){
-            (this.attrs as any)[attr] = value
+    public changeAttr(attr:attrTtype | keyof attrTtype, value?:string){
+        if(typeof attr == "string" && value){
+            this.element.setAttribute(attr, value)
+            if(this.attrs){
+                (this.attrs as any)[attr] = value
+            }
+            return this
+        }
+        if(value || typeof attr == "string"){
+            throw Error("string must have a value")
+            return this
+        }
+        for(let key of Object.keys(attr)){
+            this.element.setAttribute(key, (attr as any)[key])
+            if(this.attrs){
+                (this.attrs as any)[key] = (attr as any)[key]
+            }
         }
         return this
     }
@@ -336,7 +351,6 @@ class YoFiSelectorElement extends YoFiElement {
 
                 }
             },
-            init:init,
             textContent:"",
         });
         this.element.remove();
@@ -377,6 +391,9 @@ class YoFiSelectorElement extends YoFiElement {
             for(let child of cheldren){
                 this.element.appendChild(child.element)
             }
+        }
+        if(init){
+            init(this)
         }
     }
 }

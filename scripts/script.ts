@@ -4,7 +4,9 @@ const my_p = _p([
         _span([
             "yaaay"
         ])
-    ])
+    ], (elm) => {
+        console.log(elm.element)
+    })
 ], {
     baseSelector:baseElm("body"),
     classes:"xoxo lala zozo",
@@ -19,7 +21,9 @@ const my_p = _p([
 const input = _input("", {
     baseSelector:(baseElm("body")),
     type:"text",
-}).changeAttr("placeHolder", "coco")
+}).changeAttr({
+    placeHolder:"lala",
+})
 
 
 // console.log(input.attrs)
