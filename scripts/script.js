@@ -1,13 +1,11 @@
 "use strict";
 const my_p = _p([
     "lala 2",
-    _span([
-        "this is a span"
-    ], {
-        style: {
-            display: "block",
-        }
-    }),
+    _("#FF", [
+        _span([
+            "yaaay"
+        ])
+    ])
 ], {
     baseSelector: baseElm("body"),
     classes: "xoxo lala zozo",
@@ -15,13 +13,11 @@ const my_p = _p([
         color: "#EEE",
     }
 }, async () => {
-    await Sleep.sleepBySuc(3);
-    console.log("yay");
 }).changeStyles({
     background: "#000",
 });
 const input = _input("", {
     baseSelector: (baseElm("body")),
     type: "text",
-});
-console.log(input.attrs);
+}).changeAttr("placeHolder", "coco");
+// console.log(input.attrs)

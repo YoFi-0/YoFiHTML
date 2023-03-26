@@ -9,6 +9,7 @@ interface attrTtype {
     readonly baseSelector?:string
     readonly placeHolder?:string
     readonly value?:string
+    readonly title?:string
 }
 
 class Sleep {
@@ -84,11 +85,12 @@ interface YoFiFunctions {
     addClasses:(classes:string) => YoFiElement;
     removeClasses:(classes:string) => YoFiElement;
     setText:(text:string) => YoFiElement;
+    changeAttr: (attr:keyof attrTtype, value:string) => YoFiElement
 }
 
 class YoFiElement implements YoFiEvnts, YoFiFunctions{
     public readonly attrs:attrTtype | undefined
-    public readonly cheldren:YoFiElement[] | undefined
+    protected readonly cheldren:YoFiElement[] | undefined
     public readonly element:HTMLElement
     public readonly jQElement:JQuery<HTMLElement>
     public readonly text:string = ""
@@ -99,6 +101,7 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         this.element = element
         if(attrs){
             this.attrs = attrs
+            this.set_all_attrs()
             if(attrs.type){
                 (this.element as HTMLInputElement).type = attrs.type
             }
@@ -197,7 +200,7 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         for(let className of classes.trim().split(" ")){
             className ? this.element.classList.add(className) : null
             if(this.attrs){
-                var tembClasses =  this.attrs.classes?.trim().split(" ")
+                var tembClasses =  this.attrs.classes?.trim().split(" ") || []
                 tembClasses?.push(className)
                 this.Re_Attr({
                     classes:tembClasses?.join(" ")
@@ -285,13 +288,105 @@ class YoFiElement implements YoFiEvnts, YoFiFunctions{
         }
         return this
     }
-    private Re_Attr(options:attrTtype){
+    protected Re_Attr(options:attrTtype){
         if(this.attrs){
             for(let key of Object.keys(options)){
                 (this.attrs as any)[key] = (options as any)[key]
             }
         }
+        return this
     }
+    protected set_all_attrs(){
+        if(this.attrs){
+            for(let key of Object.keys(this.attrs)){
+                if(
+                    key == "baseSelector" ||
+                    key == "classes" ||
+                    key == "dataset" ||
+                    key == "href" ||
+                    key == "id" ||
+                    key == "placeHolder" || 
+                    key == "src" || 
+                    key == "style" || 
+                    key == "value" || 
+                    key == "type"
+                ){
+                    continue;
+                }
+                this.element.setAttribute(key, (this.attrs as any)[key])
+            }
+        }
+        return this
+    }
+}
+
+class YoFiSelectorElement extends YoFiElement {
+    constructor({selector, init, cheldren}:{
+        selector:string,
+        init?:(elem:YoFiElement) => void | Promise<void>,
+        cheldren?:YoFiElement[]
+    }){
+        super({
+            tag:Y.div,
+            attrs:{
+                style:{
+
+                },
+                dataset:{
+
+                }
+            },
+            init:init,
+            textContent:"",
+        });
+        this.element.remove();
+        // get elmemnt
+        (this.element as any) = document.querySelector(selector);
+        (this.jQElement as any) = $(selector);
+        (this.tag as any) = this.element.tagName.toLowerCase();
+        // get elmemnt
+        // change text
+        (this.text as any) = this.element.tagName == "INPUT" ?
+        (this.element as HTMLInputElement).value :
+        this.element.tagName == "IMG" ? (this.element as HTMLImageElement).src :
+        this.element.textContent
+        // change text
+        if(this.element.className){
+            this.addClasses(this.element.className);
+        }
+        
+        const options = this.element.attributes
+        if(this.attrs){
+            for(let key of Object.values(options)){
+                if(key.name == "style" || key.name == "class"){
+                    continue;
+                }
+                if(key.name.startsWith("data-")){
+                    this.attrs.dataset[key.name.split("-")[1]] = key.value
+                    continue;
+                }
+                (this.attrs as any)[key.name] = key.value
+            }
+        }
+        if(this.element.style){
+            for(let key of Object.values(this.element.style)){
+                (this.attrs!.style as any)[key] = (this.element.style as any)[key]
+            }
+        }
+        if(cheldren){
+            for(let child of cheldren){
+                this.element.appendChild(child.element)
+            }
+        }
+    }
+}
+
+const _ = (selector:string, cheldren:YoFiElement[] ,init?:(elem:YoFiElement) => void | Promise<void>):YoFiElement =>{
+    return new YoFiSelectorElement({
+        selector:selector,
+        cheldren:cheldren,
+        init:init
+    })
 }
 
 const baseId = (id:string) => {

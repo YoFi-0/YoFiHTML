@@ -26,6 +26,7 @@ class YoFiElement {
         this.element = element;
         if (attrs) {
             this.attrs = attrs;
+            this.set_all_attrs();
             if (attrs.type) {
                 this.element.type = attrs.type;
             }
@@ -124,7 +125,7 @@ class YoFiElement {
         for (let className of classes.trim().split(" ")) {
             className ? this.element.classList.add(className) : null;
             if (this.attrs) {
-                var tembClasses = this.attrs.classes?.trim().split(" ");
+                var tembClasses = this.attrs.classes?.trim().split(" ") || [];
                 tembClasses?.push(className);
                 this.Re_Attr({
                     classes: tembClasses?.join(" ")
@@ -216,8 +217,87 @@ class YoFiElement {
                 this.attrs[key] = options[key];
             }
         }
+        return this;
+    }
+    set_all_attrs() {
+        if (this.attrs) {
+            for (let key of Object.keys(this.attrs)) {
+                if (key == "baseSelector" ||
+                    key == "classes" ||
+                    key == "dataset" ||
+                    key == "href" ||
+                    key == "id" ||
+                    key == "placeHolder" ||
+                    key == "src" ||
+                    key == "style" ||
+                    key == "value" ||
+                    key == "type") {
+                    continue;
+                }
+                this.element.setAttribute(key, this.attrs[key]);
+            }
+        }
+        return this;
     }
 }
+class YoFiSelectorElement extends YoFiElement {
+    constructor({ selector, init, cheldren }) {
+        super({
+            tag: Y.div,
+            attrs: {
+                style: {},
+                dataset: {}
+            },
+            init: init,
+            textContent: "",
+        });
+        this.element.remove();
+        // get elmemnt
+        this.element = document.querySelector(selector);
+        this.jQElement = $(selector);
+        this.tag = this.element.tagName.toLowerCase();
+        // get elmemnt
+        // change text
+        this.text = this.element.tagName == "INPUT" ?
+            this.element.value :
+            this.element.tagName == "IMG" ? this.element.src :
+                this.element.textContent;
+        // change text
+        if (this.element.className) {
+            this.addClasses(this.element.className);
+        }
+        const options = this.element.attributes;
+        if (this.attrs) {
+            for (let key of Object.values(options)) {
+                if (key.name == "style" || key.name == "class") {
+                    continue;
+                }
+                if (key.name.startsWith("data-")) {
+                    this.attrs.dataset[key.name.split("-")[1]] = key.value;
+                    continue;
+                }
+                this.attrs[key.name] = key.value;
+            }
+        }
+        if (this.element.style) {
+            for (let key of Object.values(this.element.style)) {
+                this.attrs.style[key] = this.element.style[key];
+            }
+        }
+        if (cheldren) {
+            for (let child of cheldren) {
+                this.element.appendChild(child.element);
+            }
+        }
+    }
+}
+const _ = (selector, cheldren, init) => {
+    return new YoFiSelectorElement({
+        selector: selector,
+        cheldren: cheldren,
+        init: init
+    });
+};
 const baseId = (id) => {
     return `#${id}`;
 };
