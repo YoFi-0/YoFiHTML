@@ -771,6 +771,8 @@ HTML:
 
 ```html
 <div id="app"></div>
+<script src="/YoFiHTML/lib/index.js"></script>
+<script src="/YoFiHTML/lib/YoFi_Elms.js"></script>
 ```
 
 After running the JavaScript, YoFiHTML creates the DOM structure directly inside `#app`.
